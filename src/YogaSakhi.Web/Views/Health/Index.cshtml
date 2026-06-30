@@ -1,0 +1,93 @@
+@{
+    ViewData["Title"] = "Health Conditions";
+}
+
+<div class="container mt-5">
+    <h1>Our Health Programs</h1>
+    <p class="lead">Choose a program to learn more and get personalized guidance</p>
+    
+    <div class="row mt-5">
+        @foreach (var condition in Model?.HealthConditions ?? new List<dynamic>())
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="condition-card">
+                    @if (!string.IsNullOrEmpty(condition.IconUrl))
+                    {
+                        <img src="@condition.IconUrl" alt="@condition.Name" class="condition-image" />
+                    }
+                    <div class="condition-body">
+                        <h3 class="condition-title">@condition.Name</h3>
+                        <p class="condition-description">@condition.Description</p>
+                        <div class="condition-stats">
+                            <span class="stat">@condition.SymptomCount Symptoms</span>
+                            <span class="stat">@condition.ExerciseCount Exercises</span>
+                        </div>
+                        <a href="@Url.Action("Details", new { id = condition.Id })" class="btn btn-primary btn-block mt-3">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .condition-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .condition-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .condition-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .condition-body {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .condition-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .condition-description {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    .condition-stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+    .stat {
+        color: #667eea;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+</style>

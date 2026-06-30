@@ -1,0 +1,161 @@
+@model GetHealthConditionResponse
+
+@{
+    ViewData["Title"] = Model?.Name;
+}
+
+<div class="container mt-5">
+    <div class="breadcrumb">
+        <a href="@Url.Action("Index", "Health")">Health Programs</a> / <span>@Model?.Name</span>
+    </div>
+
+    <h1 class="mt-4">@Model?.Name</h1>
+    <p class="lead text-muted">@Model?.Description</p>
+    <p class="overview">@Model?.Overview</p>
+
+    <ul class="nav nav-tabs mt-5" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#symptoms">Symptoms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#exercises">Exercises</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#diet">Diet Plans</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#treatment">Treatment</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-4">
+        <div id="symptoms" class="tab-pane fade show active">
+            <h3>Common Symptoms</h3>
+            @if (Model?.Symptoms?.Count > 0)
+            {
+                <div class="row mt-4">
+                    @foreach (var symptom in Model.Symptoms)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <div class="symptom-card">
+                                <h5>@symptom.SymptomName</h5>
+                                <p>@symptom.Description</p>
+                                <div class="severity-badge">
+                                    Severity: <span class="badge badge-warning">@symptom.SeverityLevel/10</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div id="exercises" class="tab-pane fade">
+            <h3>Recommended Exercises</h3>
+            @if (Model?.Exercises?.Count > 0)
+            {
+                <div class="row mt-4">
+                    @foreach (var exercise in Model.Exercises)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="exercise-card">
+                                <h5>@exercise.ExerciseName</h5>
+                                <p>@exercise.Description</p>
+                                <div class="exercise-details">
+                                    <span class="badge badge-info">@exercise.DurationMinutes mins</span>
+                                    <span class="badge badge-secondary">Level @exercise.IntensityLevel</span>
+                                    @if (exercise.IsSafeInPregnancy)
+                                    {
+                                        <span class="badge badge-success">Pregnancy Safe ✓</span>
+                                    }
+                                </div>
+                                <p class="mt-3 small"><strong>Instructions:</strong> @exercise.Instructions</p>
+                                @if (!string.IsNullOrEmpty(exercise.VideoUrl))
+                                {
+                                    <a href="@exercise.VideoUrl" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                        📹 Watch Video
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div id="diet" class="tab-pane fade">
+            <h3>Diet Plans</h3>
+            @if (Model?.DietPlans?.Count > 0)
+            {
+                @foreach (var plan in Model.DietPlans)
+                {
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title">@plan.PlanName</h5>
+                            <p class="card-text">@plan.Description</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>✓ Foods to Include:</h6>
+                                    <p>@plan.FoodsToInclude</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>✗ Foods to Avoid:</h6>
+                                    <p>@plan.FoodsToAvoid</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div id="treatment" class="tab-pane fade">
+            <h3>Treatment & Lifestyle</h3>
+            @if (Model?.Treatments?.Count > 0)
+            {
+                @foreach (var treatment in Model.Treatments)
+                {
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title">@treatment.TreatmentName</h5>
+                            <p class="card-text">@treatment.Description</p>
+                            <p><strong>Medical Advice:</strong> @treatment.MedicalAdvice</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .symptom-card, .exercise-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.3s;
+    }
+
+    .symptom-card:hover, .exercise-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .symptom-card h5, .exercise-card h5 {
+        color: #667eea;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .exercise-details {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+    }
+</style>

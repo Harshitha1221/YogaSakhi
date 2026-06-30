@@ -1,0 +1,61 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetVersion: '6.0.x'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              version: $(dotnetVersion)
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore NuGet packages'
+            inputs:
+              command: 'restore'
+              projects: 'src/**/*.csproj'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build Solution'
+            inputs:
+              command: 'build'
+              arguments: '--configuration $(buildConfiguration)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Tests'
+            inputs:
+              command: 'test'
+              projects: 'tests/**/*.csproj'
+              arguments: '--configuration $(buildConfiguration)'
+
+  - stage: Deploy
+    condition: succeeded()
+    jobs:
+      - deployment: DeployToAzure
+        environment: 'Production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: DotNetCoreCLI@2
+                  displayName: 'Publish'
+                  inputs:
+                    command: 'publish'
+                    publishWebProjects: true
+                    arguments: '--configuration $(buildConfiguration) --output $(Pipeline.Workspace)/app'
+
+                - task: AzureWebApp@1
+                  displayName: 'Deploy to Azure App Service'
+                  inputs:
+                    azureSubscription: 'Azure Subscription'
+                    appType: 'webAppLinux'
+                    appName: 'YogaSakhi-API'
+                    package: '$(Pipeline.Workspace)/app/**/*.zip'

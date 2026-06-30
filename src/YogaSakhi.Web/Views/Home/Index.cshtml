@@ -1,0 +1,134 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Welcome to YogaSakhi AI</h1>
+            <p class="lead">Your Personal AI Health Assistant for Women's Wellness</p>
+            <p>Personalized guidance for PCOS, Thyroid, Core Strengthening, Pregnancy Yoga & Diastasis Recti Recovery</p>
+            
+            <div class="cta-buttons">
+                <a href="@Url.Action("Login", "Auth")" class="btn btn-primary btn-lg">Login</a>
+                <a href="@Url.Action("Register", "Auth")" class="btn btn-outline-primary btn-lg">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Health Programs</h2>
+        
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>PCOS Management</h3>
+                    <p>Personalized diet plans and exercises to manage hormonal balance and insulin resistance.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🦋</div>
+                    <h3>Thyroid Support</h3>
+                    <p>Targeted exercises and nutritional guidance for thyroid health and energy management.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3>Core Strengthening</h3>
+                    <p>Progressive core exercises for better posture, reduced back pain, and functional fitness.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🤰</div>
+                    <h3>Pregnancy Yoga</h3>
+                    <p>Safe, trimester-specific yoga poses designed for pregnant women at all stages.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🧘‍♀️</div>
+                    <h3>Diastasis Recti Recovery</h3>
+                    <p>Targeted recovery program for abdominal separation after pregnancy.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Recommendations</h3>
+                    <p>Personalized health advice powered by AI technology.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .hero-content .lead {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .cta-buttons {
+        margin-top: 40px;
+    }
+
+    .cta-buttons .btn {
+        margin: 0 10px;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+</style>
